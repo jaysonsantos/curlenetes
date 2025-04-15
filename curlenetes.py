@@ -108,7 +108,8 @@ def main():
         print("Usage: curlenetes <namespace.service:port> [args]")
         sys.exit(1)
     context = get_context()
-    pid_file = f"/tmp/{context}-{hashlib.sha256(host.encode()).hexdigest()}.pid"
+    context_host = f'{context}:{host}'
+    pid_file = f"/tmp/{hashlib.sha256(context_host.encode()).hexdigest()}.pid"
     if not is_port_forward_running(pid_file):
         start_port_forward(host, pid_file)
     local_port = get_local_port(pid_file)
